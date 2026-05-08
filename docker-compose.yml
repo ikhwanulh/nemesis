@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/data:/app/data
+      - ./backend/src:/app/src
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+    restart: always
+
+  frontend:
+    image: python:3.9-slim
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    command: python -m http.server 8080
+    restart: always

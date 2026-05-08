@@ -72,6 +72,28 @@ function createApp(db) {
     res.json(payload);
   });
 
+  // Scraper Routes
+  const syncManager = require("./scraper/sync-manager");
+  const cron = require("node-cron");
+
+  app.post("/api/scraper/sync", (req, res) => {
+    if (syncManager.getStatus().isRunning) {
+      return res.status(409).json({ error: "Sync already in progress" });
+    }
+    syncManager.sync(); // Run in background
+    res.json({ message: "Sync started", status: syncManager.getStatus() });
+  });
+
+  app.get("/api/scraper/status", (req, res) => {
+    res.json(syncManager.getStatus());
+  });
+
+  // Initialize 24-hour cron job (Runs at 02:00 AM every day)
+  cron.schedule("0 2 * * *", () => {
+    console.log("Starting scheduled daily sync...");
+    syncManager.sync();
+  });
+
   app.use((err, _req, res, _next) => {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });

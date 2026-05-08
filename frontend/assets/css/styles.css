@@ -18,6 +18,51 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--b0);color:var(-
 .ldot{width:7px;height:7px;background:var(--sage);border-radius:50%;animation:pls 2s infinite;display:inline-block}
 @keyframes pls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 .ll{font-size:10px;color:var(--sage);font-weight:600;display:flex;align-items:center;gap:5px}
+.sync-btn {
+  background: var(--b0);
+  border: 1px solid var(--bd);
+  color: var(--t1);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.sync-btn:hover:not(:disabled) {
+  border-color: var(--sage);
+  background: var(--b2);
+  transform: translateY(-1px);
+}
+.sync-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.sync-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+.sync-btn.loading i, .sync-btn.loading::before {
+  animation: spin 1s linear infinite;
+}
+.sync-status {
+  font-size: 10px;
+  color: var(--t3);
+  font-family: 'JetBrains Mono', monospace;
+  text-align: right;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;padding:10px 24px;background:var(--b0);flex-shrink:0}
 .kc{background:var(--b2);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;position:relative;overflow:hidden}
 .kc::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;border-radius:10px 10px 0 0}
